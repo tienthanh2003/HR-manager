@@ -1,0 +1,95 @@
+﻿<Window x:Class="Employee_Management.View.LeaveManagement"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Quản lý nghỉ phép" Height="800" Width="1000" Background="#2C3E50">
+
+    <Grid>
+        <!-- Border chứa danh sách đơn nghỉ phép -->
+        <Border Background="#34495E" CornerRadius="10" BorderBrush="#1ABC9C" BorderThickness="2"
+                Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Thanh tìm kiếm và nút chức năng -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="0">
+                    <!-- Label và TextBox tìm kiếm -->
+                    <Label Content="Tìm kiếm:" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
+                    <TextBox x:Name="txtSearch" Width="200" Height="30" Padding="5"
+                             Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                             Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!-- ComboBox để chọn trạng thái -->
+                    <Label Content="Trạng thái:" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <ComboBox ItemsSource="{Binding Statuses}" 
+                              SelectedItem="{Binding SelectedStatus, Mode=TwoWay}" 
+                              Width="100" Height="30" Margin="10,0,0,0"/>
+
+                    <!-- Các nút chức năng -->
+                    <Button Content="Tìm" Width="100" Height="30" Margin="10,0,0,0"
+                            Background="#1ABC9C" Foreground="White" FontWeight="Bold"
+                            BorderBrush="Transparent" Cursor="Hand" Command="{Binding SearchCommand}"/>
+                    <Button Content="Tải" Width="100" Height="30" Margin="10,0,0,0"
+                            Background="#3498DB" Foreground="White" FontWeight="Bold"
+                            BorderBrush="Transparent" Cursor="Hand" Command="{Binding LoadCommand}"/>
+                    <Button Content="Trang chủ" Width="120" Height="30" Margin="10,0,0,0"
+                            Background="#E74C3C" Foreground="White" FontWeight="Bold"
+                            BorderBrush="Transparent" Cursor="Hand" Command="{Binding BackCommand}"/>
+                </StackPanel>
+
+                <!-- DataGrid hiển thị danh sách đơn nghỉ phép -->
+                <DataGrid x:Name="dgLeaves" Grid.Row="1" Margin="10" AutoGenerateColumns="False"
+                          Background="Transparent" RowBackground="#ECF0F1" AlternatingRowBackground="#D5DBDB"
+                          HeadersVisibility="Column" IsReadOnly="True" ItemsSource="{Binding Leaves}">
+                    <DataGrid.Columns>
+                        <!-- Cột Employee Name -->
+                        <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding EmployeeName}" Width="0.6*"/>
+
+                        <!-- Cột Leave Type -->
+                        <DataGridTextColumn Header="Nghỉ phép" Binding="{Binding LeaveType}" Width="120"/>
+
+                        <DataGridTextColumn Header="Số ngày phép" Binding="{Binding RemainingLeaveDays}" Width="0.4*"/>
+                        <!-- Cột Start Date -->
+                        <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding StartDate, StringFormat='dd/MM/yyyy'}" Width="100"/>
+
+                        <!-- Cột End Date -->
+                        <DataGridTextColumn Header="Ngày kết thúc" Binding="{Binding EndDate, StringFormat='dd/MM/yyyy'}" Width="100"/>
+
+                        <!-- Cột Status -->
+                        <DataGridTextColumn Header="Trạng thái" Binding="{Binding Status}" Width="100"/>
+
+                        <!-- Cột Action (Approve/Reject) -->
+                        <DataGridTemplateColumn Header="Thao tác" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                        <Button Content="Duyệt" Width="80" Margin="5,0"
+                                                Background="#1ABC9C" Foreground="White" FontWeight="Bold"
+                                                BorderBrush="Transparent" Cursor="Hand"
+                                                Command="{Binding DataContext.ApproveCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"/>
+                                        <Button Content="Từ chối" Width="80" Margin="5,0"
+                                                Background="#E74C3C" Foreground="White" FontWeight="Bold"
+                                                BorderBrush="Transparent" Cursor="Hand"
+                                                Command="{Binding DataContext.RejectCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Footer -->
+                <TextBlock Grid.Row="2" Text="Quản lý nghỉ phép - Hệ thống quản lý nhân sự" HorizontalAlignment="Center"
+                           Foreground="White" FontSize="12" Margin="10"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

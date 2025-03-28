@@ -1,0 +1,114 @@
+﻿<Window x:Class="Employee_Management.View.SendNotificationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gửi thông báo" Height="650" Width="600" WindowStartupLocation="CenterScreen"
+        Background="#2C3E50">
+
+    <Grid>
+        <Border Background="#34495E" CornerRadius="10" BorderBrush="#1ABC9C" BorderThickness="2"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Padding="20">
+            <StackPanel>
+                <!-- Tiêu đề -->
+                <TextBlock Text="Gửi thông báo" FontSize="20" FontWeight="Bold" 
+                           Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <!-- Nhập tiêu đề thông báo -->
+                <TextBlock Text="Tiêu đề thông báo:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,5,0,5"/>
+                <TextBox x:Name="txtNotificationTitle" 
+                          Height="35" 
+                          FontSize="14" 
+                          Padding="5" 
+                          Background="#ECF0F1" 
+                          BorderBrush="#1ABC9C" 
+                          BorderThickness="1"
+                          Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Nhập nội dung thông báo -->
+                <TextBlock Text="Nội dung thông báo:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtNotificationContent" 
+                          Height="100" 
+                          FontSize="14" 
+                          Padding="5" 
+                          Background="#ECF0F1" 
+                          BorderBrush="#1ABC9C" 
+                          BorderThickness="1"
+                          Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}"
+                          TextWrapping="Wrap"
+                          AcceptsReturn="True"/>
+
+                <!-- Nhập ngày kết thúc -->
+                <TextBlock Text="Ngày kết thúc:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <DatePicker x:Name="dpEndDate"
+                             Height="35"
+                             FontSize="14"
+                             Padding="5"
+                             Background="#ECF0F1"
+                             BorderBrush="#1ABC9C"
+                             BorderThickness="1"
+                             SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- CheckBox để chọn gửi toàn bộ công ty -->
+                <CheckBox Content="Gửi toàn bộ công ty" 
+                          IsChecked="{Binding IsBroadcast, UpdateSourceTrigger=PropertyChanged}"
+                          FontSize="14" 
+                          Foreground="White" 
+                          Margin="0,10,0,5"/>
+
+                <!-- ComboBox để chọn phòng ban (chỉ hiển thị khi không chọn gửi toàn bộ công ty) -->
+                <StackPanel x:Name="DepartmentPanel">
+                    <TextBlock Text="Chọn phòng ban:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                    <ComboBox x:Name="cmbDepartments" 
+                              ItemsSource="{Binding Departments}" 
+                              DisplayMemberPath="DepartmentName"
+                              SelectedValuePath="DepartmentId"
+                              SelectedValue="{Binding SelectedDepartmentId}"
+                              Height="35" 
+                              FontSize="14" 
+                              Padding="5" 
+                              Background="#ECF0F1" 
+                              BorderBrush="#1ABC9C" 
+                              BorderThickness="1"/>
+
+                    <!-- DataTrigger để điều khiển Visibility -->
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsBroadcast}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
+
+                <!-- Nút Gửi và Hủy -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Button Content="Gửi" 
+                            Width="100" 
+                            Height="35" 
+                            Background="#1ABC9C" 
+                            Foreground="White" 
+                            FontWeight="Bold" 
+                            BorderBrush="Transparent" 
+                            Cursor="Hand" 
+                            Margin="0,0,10,0"
+                            Command="{Binding SendNotificationCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+
+                    <Button Content="Huỷ" 
+                            Width="100" 
+                            Height="35" 
+                            Background="#E74C3C" 
+                            Foreground="White" 
+                            FontWeight="Bold" 
+                            BorderBrush="Transparent" 
+                            Cursor="Hand" 
+                            Margin="10,0,0,0"
+                            Command="{Binding CancelCommand}"
+                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

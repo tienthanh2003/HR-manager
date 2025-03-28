@@ -1,0 +1,57 @@
+﻿<Window x:Class="Employee_Management.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Employee_Management"
+        mc:Ignorable="d"
+        Title="Login" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#2C3E50">
+
+    <Grid>
+        <Border Background="#34495E" CornerRadius="15" Padding="30" Margin="20">
+            <StackPanel>
+                <!-- Tiêu đề và biểu tượng -->
+                <StackPanel HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <TextBlock Text="Welcome to HR Management " Foreground="#FFFF" FontSize="30" FontWeight="Bold"/>
+                    <TextBlock Text="Login" FontSize="28" FontWeight="Bold" Foreground="#FFFFFF"  HorizontalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Trường nhập UserName -->
+                <StackPanel Margin="0,0,0,15">
+                    <TextBlock Text="UserName:" FontSize="16" Foreground="#FFFFFF" Margin="0,0,0,5"/>
+                    <TextBox x:Name="txtUserName" Height="35" FontSize="16" Padding="5" BorderBrush="#2980B9" BorderThickness="1" Background="#FFFFFF"
+                             Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+
+                <!-- Trường nhập Password -->
+                <StackPanel Margin="0,0,0,20">
+                    <TextBlock Text="Password:" FontSize="16" Foreground="#FFFFFF" Margin="0,0,0,5"/>
+                    <PasswordBox x:Name="txtPassword" Height="35" FontSize="16" Padding="5" BorderBrush="#2980B9" BorderThickness="1" Background="#FFFFFF"
+                                 PasswordChanged="PasswordBox_PasswordChanged" />
+                </StackPanel>
+
+                <!-- Nút đăng nhập -->
+                <Button Content="Login" Height="40" FontSize="16" Background="#3498DB" Foreground="#FFFFFF" BorderBrush="#2980B9" BorderThickness="0"
+                        Command="{Binding LoginCommand}" Width="150" HorizontalAlignment="Center">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#3498DB"/>
+                            <Setter Property="Foreground" Value="#FFFFFF"/>
+                            <Setter Property="BorderBrush" Value="#2980B9"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2980B9"/>
+                                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

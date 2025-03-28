@@ -1,0 +1,96 @@
+﻿<Window x:Class="Employee_Management.View.AddEmployee"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Add New Employee" Height="930" Width="1000" WindowStartupLocation="CenterScreen"
+        Background="#2C3E50">
+    
+    <Grid>
+        <!-- Border chứa form thêm nhân viên -->
+        <Border Background="#34495E" CornerRadius="15" BorderBrush="#1ABC9C" BorderThickness="2"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Width="450" Padding="20">
+            <StackPanel>
+                <!-- Tiêu đề -->
+                <TextBlock Text="Thêm nhân viên" FontSize="24" FontWeight="Bold" 
+                           Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+                <!-- Full Name -->
+                <TextBlock Text="Họ và tên:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,5,0,5"/>
+                <TextBox x:Name="txtFullName" Height="35" FontSize="14" Padding="5" 
+                         Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                         Text="{Binding FullName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Date of Birth -->
+                <TextBlock Text="Ngày sinh:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <DatePicker x:Name="dpDateOfBirth" Height="35" FontSize="14" Padding="5" 
+                            Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                            SelectedDate="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Gender -->
+                <TextBlock Text="Giới tính :" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <ComboBox x:Name="cbGender" Height="35" FontSize="14" Padding="5" 
+                          Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                          ItemsSource="{Binding Genders}"
+                          SelectedItem="{Binding Gender, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Address -->
+                <TextBlock Text="Địa chỉ:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtAddress" Height="35" FontSize="14" Padding="5" 
+                          Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                          Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Phone Number -->
+                <TextBlock Text="Số điện thoại:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtPhoneNumber" Height="35" FontSize="14" Padding="5" 
+                          Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                          Text="{Binding PhoneNumber, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Position -->
+                <TextBlock Text="Chức vụ:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtPosition" Height="35" FontSize="14" Padding="5" 
+                          Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                          Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Salary -->
+                <TextBlock Text="Lương tháng:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <TextBox x:Name="txtSalary" Height="35" FontSize="14" Padding="5" 
+                          Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                          Text="{Binding Salary, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Department -->
+                <TextBlock Text="Phòng ban:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <ComboBox  Height="35" FontSize="14" Padding="5" 
+                          Background="#ECF0F1" BorderBrush="#1ABC9C" BorderThickness="1"
+                          DisplayMemberPath="DepartmentName" SelectedValuePath="DepartmentID"
+                          SelectedItem="{Binding SelectedDepartment, UpdateSourceTrigger=PropertyChanged}"
+                           ItemsSource="{Binding Departments}"
+                />
+
+                <!-- Avatar -->
+                <TextBlock Text="Ảnh đại diện:" FontSize="16" FontWeight="SemiBold" Foreground="White" Margin="0,10,0,5"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="btnUploadAvatar" Content="Upload" Width="120" Height="35" 
+                            Background="#1ABC9C" Foreground="White" FontWeight="Bold" 
+                            BorderBrush="Transparent" Cursor="Hand" Margin="0,0,10,0"
+                            Command="{Binding UploadAvatarCommand}"/>
+                    <Image x:Name="imgAvatar" Width="100" Height="100" Stretch="Uniform"
+                           Source="{Binding Avatar}"/>
+                </StackPanel>
+
+                <!-- Nút Add và Cancel -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                    <Button Content="Thêm" Width="100" Height="35" Background="#1ABC9C" 
+                            Foreground="White" FontWeight="Bold" BorderBrush="Transparent" 
+                            Cursor="Hand" Margin="0,0,10,0"
+                            Command="{Binding AddEmployeeCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    <Button Content="Huỷ" Width="100" Height="35" Background="#E74C3C" 
+                            Foreground="White" FontWeight="Bold" BorderBrush="Transparent" 
+                            Cursor="Hand" Margin="10,0,0,0"
+                            Command="{Binding CancelCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

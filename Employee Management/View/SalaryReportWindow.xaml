@@ -1,0 +1,102 @@
+﻿<Window x:Class="Employee_Management.View.SalaryReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Employee_Management.View"
+        mc:Ignorable="d"
+      Title="Báo cáo lương" Height="600" Width="1200" Background="#2C3E50">
+
+    <Grid>
+        <!-- Border chứa danh sách lương thưởng -->
+        <Border Background="#34495E" CornerRadius="10" BorderBrush="#1ABC9C" BorderThickness="2"
+                Margin="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Thanh chọn thời gian và nút chức năng -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="0">
+                    <!-- ComboBox chọn tháng -->
+                    <Label Content="Tháng:" VerticalAlignment="Center" Foreground="White" FontWeight="Bold"/>
+                    <ComboBox x:Name="cbMonth" Width="100" Height="30" Margin="10,0,0,0"
+              ItemsSource="{Binding Months}"
+              SelectedItem="{Binding SelectedMonth, Mode=TwoWay}"/>
+
+                    <!-- ComboBox chọn quý -->
+                    <Label Content="Quý:" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <ComboBox x:Name="cbQuarter" Width="100" Height="30" Margin="10,0,0,0"
+              ItemsSource="{Binding Quarters}"
+              SelectedItem="{Binding SelectedQuarter, Mode=TwoWay}"/>
+
+                    <!-- ComboBox chọn năm -->
+                    <Label Content="Năm:" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="10,0,0,0"/>
+                    <ComboBox x:Name="cbYear" Width="100" Height="30" Margin="10,0,0,0"
+              ItemsSource="{Binding Years}"
+              SelectedItem="{Binding SelectedYear, Mode=TwoWay}"/>
+
+                    <!-- Nút tải dữ liệu -->
+                    <Button Content="Tải dữ liệu" Width="120" Height="30" Margin="10,0,0,0"
+            Background="#1ABC9C" Foreground="White" FontWeight="Bold"
+            BorderBrush="Transparent" Cursor="Hand" Command="{Binding LoadCommand}"/>
+
+                    <!-- Nút xuất Excel -->
+                    <Button Content="Xuất Excel" Width="120" Height="30" Margin="10,0,0,0"
+            Background="#3498DB" Foreground="White" FontWeight="Bold"
+            BorderBrush="Transparent" Cursor="Hand" Command="{Binding ExportExcelCommand}"/>
+
+                    <!-- Nút xuất PDF -->
+                    <Button Content="Xuất PDF" Width="120" Height="30" Margin="10,0,0,0"
+            Background="#E74C3C" Foreground="White" FontWeight="Bold"
+            BorderBrush="Transparent" Cursor="Hand" Command="{Binding ExportPdfCommand}"/>
+
+                    <!-- Nút quay lại -->
+                    <Button Content="Quay lại" Width="120" Height="30" Margin="10,0,0,0"
+            Background="#E74C3C" Foreground="White" FontWeight="Bold"
+            BorderBrush="Transparent" Cursor="Hand" Command="{Binding BackCommand}"/>
+                </StackPanel>
+
+                <!-- DataGrid hiển thị danh sách lương thưởng -->
+                <DataGrid x:Name="dgSalaries" Grid.Row="1" Margin="10" AutoGenerateColumns="False"
+                          Background="Transparent" RowBackground="#ECF0F1" AlternatingRowBackground="#D5DBDB"
+                          HeadersVisibility="Column" IsReadOnly="True" ItemsSource="{Binding Salaries}">
+                    <DataGrid.Columns>
+                        <!-- Cột EmployeeName -->
+                        <DataGridTextColumn Header="Tên nhân viên" Binding="{Binding EmployeeName}" Width="1.5*"/>
+
+                        <!-- Cột BaseSalary -->
+                        <DataGridTextColumn Header="Lương cơ bản" Binding="{Binding BaseSalary, StringFormat='C'}" Width="120"/>
+
+                        <!-- Cột Allowance -->
+                        <DataGridTextColumn Header="Phụ cấp" Binding="{Binding Allowance, StringFormat='C'}" Width="120"/>
+
+                        <!-- Cột Bonus -->
+                        <DataGridTextColumn Header="Thưởng" Binding="{Binding Bonus, StringFormat='C'}" Width="120"/>
+
+                        <!-- Cột Deduction -->
+                        <DataGridTextColumn Header="Khấu trừ" Binding="{Binding Deduction, StringFormat='C'}" Width="120"/>
+
+                        <!-- Cột TotalSalary -->
+                        <DataGridTextColumn Header="Tổng lương" Binding="{Binding TotalSalary, StringFormat='C'}" Width="120"/>
+
+                        <!-- Cột StartDate -->
+                        <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding StartDate, StringFormat='dd/MM/yyyy'}" Width="120"/>
+
+                        <!-- Cột PaymentDate -->
+                        <DataGridTextColumn Header="Ngày thanh toán" Binding="{Binding PaymentDate, StringFormat='dd/MM/yyyy'}" Width="120"/>
+
+                        <!-- Cột SalaryStatus -->
+                        <DataGridTextColumn Header="Trạng thái" Binding="{Binding SalaryStatus}" Width="120"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- Footer -->
+                <TextBlock Grid.Row="2" Text="Báo cáo lương - Hệ thống quản lý nhân sự" HorizontalAlignment="Center"
+                           Foreground="White" FontSize="12" Margin="10"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
